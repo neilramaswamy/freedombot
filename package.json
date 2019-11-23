@@ -1,0 +1,19 @@
+{
+  "name": "freedom-bot",
+  "version": "1.0.0",
+  "description": "The bot that'll help you on your path to freedom.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/neilramaswamy/freedombot.git"
+  },
+  "author": "Neil Ramaswamy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neilramaswamy/freedombot/issues"
+  },
+  "homepage": "https://github.com/neilramaswamy/freedombot#readme"
+}
