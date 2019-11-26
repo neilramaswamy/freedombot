@@ -1,6 +1,6 @@
 import * as Discord from 'discord.js'
 import { getDescriptionFromInvocation } from '../util/commandUtil'
-import { dailyCommandInfo } from '../daily'
+import { dailyCommandInfo } from '../data/daily'
 /**
  * This module provides support for generating "rich" content for Discord.
  * Generally, functions in here should take some sort of raw data and produce

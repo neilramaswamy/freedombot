@@ -31,7 +31,7 @@ export class DailyDisciplineHandler extends AwardHandler {
     }
 }
 
-export class SetDayCommand extends AwardHandler {
+export class SetDayHandler extends AwardHandler {
     evaluate(req: CommandRequest): any {
         // ENSURE THAT THERE IS AN ARG
         // call to DB, get back new points

@@ -1,4 +1,4 @@
-import { dailyCommandInfo } from '../daily'
+import { dailyCommandInfo } from '../data/daily'
 
 export function getDescriptionFromInvocation(invocation: string): string {
     const keys = Object.keys(dailyCommandInfo)

@@ -1,6 +1,6 @@
 import { Message } from 'discord.js'
-import { CommandRequest } from './classes';
-import Config from './config'
+import { CommandRequest } from '../classes/request';
+import Config from '../config/config'
 
 export class ParseError {
     constructor(private _error: string, private _msg: Message) {}

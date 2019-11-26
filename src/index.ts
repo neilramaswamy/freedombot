@@ -1,6 +1,6 @@
 import * as Discord from 'discord.js'
-import * as Config from './config';
-import { parse, ParseError, prevalidate } from './preparation'
+import * as Config from './config/config';
+import { parse, ParseError, prevalidate } from './util/preparation'
 import { legend } from './commands'
 import { findSimilarCommands } from './util/levenshtein'
 import { sendSuggestions } from './discord/embeds'
