@@ -1,6 +1,4 @@
 import { CommandHandler, DailyCommandClass, SetDayCommandClass, ListClass } from './classes'
-import Config from '../config'
-import { tag } from './util/discord'
 import { dailyCommandInfo } from './daily'
 
 const makeBedHandler = new DailyCommandClass(

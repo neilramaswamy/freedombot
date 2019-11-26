@@ -1,32 +1,31 @@
-import * as Discord from "discord.js";
-import commands from './command/commands';
-import { parse } from "./command/parser";
-import { prevalidate } from "./command/prevalidator";
-import { CommandRequest, ParseError } from "./command/types";
+import * as Discord from 'discord.js'
 import * as Config from './config';
-import { findSimilarCommands } from "./util/levenshtein";
+import { parse, ParseError, prevalidate } from './preparation'
+import { legend } from './commands'
+import { findSimilarCommands } from './util/levenshtein'
+import { sendSuggestions } from './discord/embeds'
 
 const client = new Discord.Client()
 client.login(Config.default.auth.discord)
 client.once('ready', () => { console.log("Ready to help bring Freedom!") })
 
 client.on('message', (msg: Discord.Message) => {
-    // Ensure that we only evaluate progress-reporting messages
-    const shouldConsider = prevalidate(msg)
-    if (!shouldConsider) return;
+    if (!prevalidate(msg)) return
 
     const parseResult = parse(msg)
     if (parseResult instanceof ParseError) {
-        return parseResult.msg.reply(parseResult.error)
+        return msg.reply(parseResult.error)
     }
 
-    const commandData = commands[parseResult.name]
-    if (!commandData) {
-        const similarCommands = findSimilarCommands(parseResult.name, 3)
-        return parseResult.msg.reply(`no command called ${parseResult.name} could be found, but did you mean any of: ${similarCommands.toString()}`)
+    const targetCommand = parseResult.name
+    const handler = legend[targetCommand]
+    if (!handler) {
+        const similarCommands = findSimilarCommands(targetCommand, 3)
+        const recommendationEmbed = sendSuggestions(similarCommands)
+        
+        return msg.channel.send(recommendationEmbed)
     }
-    
-    const commandRequest = new CommandRequest(commandData, parseResult.args, parseResult.msg)
-    commandData.handler.evaluate(commandRequest)
+
+    handler.evaluate(parseResult)
 })
 

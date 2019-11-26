@@ -1,9 +1,17 @@
-import commands from '../command/commands'
+import { legend } from '../commands'
 
+/**
+ * Return all the commands in the global legend within `threshold` steps
+ * of `query`, using the Levenshtein distance.
+ * 
+ * @param query the name of the command a user tried to type
+ * @param threshold the maximum Levenshtein distance between query and a
+ * particular command.
+ */
 export function findSimilarCommands(query: string, threshold: number) {
     let hits: string[] = []
 
-    Object.keys(commands).forEach(cmd => {
+    Object.keys(legend).forEach(cmd => {
         if (levenshtein(query, cmd) <= threshold) hits.push(cmd)
     })
 
@@ -13,10 +21,6 @@ export function findSimilarCommands(query: string, threshold: number) {
 /**
  * Levenshtein implementation from RosettaCode:
  * https://rosettacode.org/wiki/Levenshtein_distance#JavaScript
- * 
- * We use this to determine command similar to a user's input, in the case that
- * they don't type in something that exactly matches. This functionality is 
- * especially helpful for new users who might not exactly know all the commands.
  */
 function levenshtein(a: string, b: string) {
     let t = [], u, i, j, m = a.length, n = b.length;

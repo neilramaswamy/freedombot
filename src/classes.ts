@@ -1,5 +1,5 @@
 import { Message, RichEmbed } from 'discord.js'
-import { listCommands } from './util/discord';
+import { listCommands } from './discord/embeds';
 
 export class CommandRequest {
     constructor(
