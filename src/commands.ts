@@ -1,66 +1,66 @@
 import { DailyDisciplineHandler, SetDayHandler, ListHandler } from './classes/definitions'
 
 import { CommandHandler } from './classes/abstract'
-import { dailyCommandInfo } from './data/daily'
+import { dailyCommandData } from './data/daily'
 
 const makeBedHandler = new DailyDisciplineHandler(
-    dailyCommandInfo.makeBed.invocation, 
-    dailyCommandInfo.makeBed.points, 
-    dailyCommandInfo.makeBed.responder
+    dailyCommandData.makeBed.invocation, 
+    dailyCommandData.makeBed.points, 
+    dailyCommandData.makeBed.responder
 )
 
 const affirmationHandler = new DailyDisciplineHandler(
-    dailyCommandInfo.affirmation.invocation, 
-    dailyCommandInfo.affirmation.points, 
-    dailyCommandInfo.affirmation.responder
+    dailyCommandData.affirmation.invocation, 
+    dailyCommandData.affirmation.points, 
+    dailyCommandData.affirmation.responder
 )
 
 const coldShowerHandler = new DailyDisciplineHandler(
-    dailyCommandInfo.coldShower.invocation, 
-    dailyCommandInfo.coldShower.points, 
-    dailyCommandInfo.coldShower.responder
+    dailyCommandData.coldShower.invocation, 
+    dailyCommandData.coldShower.points, 
+    dailyCommandData.coldShower.responder
 )
 
 const meditationHandler = new DailyDisciplineHandler(
-    dailyCommandInfo.meditation.invocation, 
-    dailyCommandInfo.meditation.points, 
-    dailyCommandInfo.meditation.responder
+    dailyCommandData.meditation.invocation, 
+    dailyCommandData.meditation.points, 
+    dailyCommandData.meditation.responder
 )
 
 const workoutHandler = new DailyDisciplineHandler(
-    dailyCommandInfo.workout.invocation, 
-    dailyCommandInfo.workout.points, 
-    dailyCommandInfo.workout.responder
+    dailyCommandData.workout.invocation, 
+    dailyCommandData.workout.points, 
+    dailyCommandData.workout.responder
 )
 
 const gratefulnessHandler = new DailyDisciplineHandler(
-    dailyCommandInfo.gratefulness.invocation, 
-    dailyCommandInfo.gratefulness.points, 
-    dailyCommandInfo.gratefulness.responder
+    dailyCommandData.gratefulness.invocation, 
+    dailyCommandData.gratefulness.points, 
+    dailyCommandData.gratefulness.responder
 )
 
 const journalHandler = new DailyDisciplineHandler(
-    dailyCommandInfo.journal.invocation, 
-    dailyCommandInfo.journal.points, 
-    dailyCommandInfo.journal.responder
+    dailyCommandData.journal.invocation, 
+    dailyCommandData.journal.points, 
+    dailyCommandData.journal.responder
 )
 
 const setdayHandler = new SetDayHandler(
-    dailyCommandInfo.setday.invocation, 
-    dailyCommandInfo.setday.points, 
-    dailyCommandInfo.setday.responder
+    dailyCommandData.setday.invocation, 
+    dailyCommandData.setday.points, 
+    dailyCommandData.setday.responder
 )
 
 const listHandler = new ListHandler()
 
 export const legend: {[key: string]: CommandHandler} = {
-    [dailyCommandInfo.affirmation.invocation]: affirmationHandler,
-    [dailyCommandInfo.coldShower.invocation]: coldShowerHandler,
-    [dailyCommandInfo.gratefulness.invocation]: gratefulnessHandler,
-    [dailyCommandInfo.journal.invocation]: journalHandler,
-    [dailyCommandInfo.makeBed.invocation]: makeBedHandler,
-    [dailyCommandInfo.meditation.invocation]: meditationHandler,
-    [dailyCommandInfo.setday.invocation]: setdayHandler,
-    [dailyCommandInfo.workout.invocation]: workoutHandler,
+    [dailyCommandData.affirmation.invocation]: affirmationHandler,
+    [dailyCommandData.coldShower.invocation]: coldShowerHandler,
+    [dailyCommandData.gratefulness.invocation]: gratefulnessHandler,
+    [dailyCommandData.journal.invocation]: journalHandler,
+    [dailyCommandData.makeBed.invocation]: makeBedHandler,
+    [dailyCommandData.meditation.invocation]: meditationHandler,
+    [dailyCommandData.setday.invocation]: setdayHandler,
+    [dailyCommandData.workout.invocation]: workoutHandler,
     "list": listHandler
 }

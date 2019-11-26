@@ -6,7 +6,7 @@
  * metadata.
  */
 
-type DailyCommand = {
+export type DailyCommand = {
     name: string
     invocation: string
     points: number
@@ -14,7 +14,7 @@ type DailyCommand = {
     responder: (...args: any[]) => string
 }
 
-export const dailyCommandInfo: {[key: string]: DailyCommand} = {
+export const dailyCommandData: {[key: string]: DailyCommand} = {
     makeBed: {
         name: "Making your bed",
         invocation: "make_bed",

@@ -2,6 +2,9 @@ import { Message, RichEmbed } from 'discord.js'
 import { AwardHandler, InformationHandler } from './abstract'
 import { CommandRequest } from './request';
 import { listCommands, buildEmbed } from '../discord/embeds'
+import { dailyCommandData } from '../data/daily';
+import { infoCommandData } from '../data/info';
+import { adminCommandData } from '../data/admins';
 
 export class DailyDisciplineHandler extends AwardHandler {
     evaluate(req: CommandRequest): void {
@@ -77,7 +80,15 @@ export class SetDayHandler extends AwardHandler {
 // ListHandler is the CommandHandler for the !list command
 export class ListHandler extends InformationHandler {
     evaluate(req: CommandRequest) {
-        const listEmbed = listCommands()
-        return req.msg.channel.send(listEmbed)
+        const dailyCommandsEmbed = listCommands('Daily Disciplines', dailyCommandData)
+        const infoCommandsEmbed = listCommands('Informational Commands', infoCommandData)
+
+        req.msg.channel.send(dailyCommandsEmbed)
+        req.msg.channel.send(infoCommandsEmbed)
+
+        // if (true) {
+        //     const adminCommandsEmbed = listCommands('Admin Commands', adminCommandData)
+        //     req.msg.channel.send(adminCommandsEmbed)
+        // }
     }
 }
