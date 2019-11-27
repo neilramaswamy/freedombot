@@ -1,10 +1,8 @@
-import { Message, RichEmbed } from 'discord.js'
-import { AwardHandler, InformationHandler } from './abstract'
+import { adminCommandLegend, dailyCommandLegend, infoCommandLegend } from '../commands';
+import { buildEmbed, listCommands } from '../discord/embeds';
+import { getCommandFromInvocation } from '../util/commandUtil';
+import { AbstractAdminViewHandler, AwardHandler, InformationHandler } from './abstract';
 import { CommandRequest } from './request';
-import { listCommands, buildEmbed } from '../discord/embeds'
-import { dailyCommandData } from '../data/daily';
-import { infoCommandData } from '../data/info';
-import { adminCommandData } from '../data/admins';
 
 export class DailyDisciplineHandler extends AwardHandler {
     evaluate(req: CommandRequest): void {
@@ -80,15 +78,45 @@ export class SetDayHandler extends AwardHandler {
 // ListHandler is the CommandHandler for the !list command
 export class ListHandler extends InformationHandler {
     evaluate(req: CommandRequest) {
-        const dailyCommandsEmbed = listCommands('Daily Disciplines', dailyCommandData)
-        const infoCommandsEmbed = listCommands('Informational Commands', infoCommandData)
+        const dailyCommandsEmbed = listCommands(
+            'Daily Disciplines', Object.keys(dailyCommandLegend))
+        const infoCommandsEmbed = listCommands(
+            'Informational Commands', Object.keys(infoCommandLegend))
 
         req.msg.channel.send(dailyCommandsEmbed)
         req.msg.channel.send(infoCommandsEmbed)
 
-        // if (true) {
-        //     const adminCommandsEmbed = listCommands('Admin Commands', adminCommandData)
-        //     req.msg.channel.send(adminCommandsEmbed)
-        // }
+        if (true) {
+            const adminCommandsEmbed = listCommands('Admin Commands', Object.keys(adminCommandLegend))
+            req.msg.channel.send(adminCommandsEmbed)
+        }
+    }
+}
+
+export class AdminViewHandler extends AbstractAdminViewHandler {
+    evaluator(req: CommandRequest) {
+        const targetUser = req.args[0]
+
+        if (!targetUser) {
+            const embed = buildEmbed(
+                "E", 
+                "User Required", 
+                req.msg.author.id,
+                getCommandFromInvocation(req.name).description.toLowerCase()
+            )
+            
+            req.msg.channel.send(embed)
+        } else {
+            console.log(`TODO: Get ${targetUser}'s ${this._field} value instead of 5!`)
+            const value = 5 // getField(targetUser, field)
+            const embed = buildEmbed(
+                "S",
+                "Score Report",
+                req.msg.author.id,
+                `**${targetUser}** has a ${this._field} of ${value}.`
+            )
+
+            req.msg.channel.send(embed)
+        }
     }
 }

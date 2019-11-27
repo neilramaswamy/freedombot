@@ -1,9 +1,9 @@
-import * as Discord from 'discord.js'
+import * as Discord from 'discord.js';
+import { legend } from './commands';
 import * as Config from './config/config';
-import { parse, ParseError, prevalidate } from './util/preparation'
-import { legend } from './commands'
-import { findSimilarCommands } from './util/levenshtein'
-import { sendSuggestions } from './discord/embeds'
+import { sendSuggestions } from './discord/embeds';
+import { findSimilarCommands } from './util/levenshtein';
+import { parse, ParseError, prevalidate } from './util/parser';
 
 const client = new Discord.Client()
 client.login(Config.default.auth.discord)

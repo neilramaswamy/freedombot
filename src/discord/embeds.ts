@@ -1,8 +1,5 @@
-import * as Discord from 'discord.js'
-import { getDescriptionFromInvocation } from '../util/commandUtil'
-import { DailyCommand } from '../data/daily'
-import { InfoCommand } from '../data/info'
-import { AdminCommand } from '../data/admins'
+import * as Discord from 'discord.js';
+import { getCommandFromInvocation } from '../util/commandUtil';
 /**
  * This module provides support for generating "rich" content for Discord.
  * Generally, functions in here should take some sort of raw data and produce
@@ -34,7 +31,7 @@ export function sendSuggestions(suggestions: string[]): Discord.RichEmbed {
         .setDescription(description)
 
     for (let suggestion of suggestions) {
-        baseEmbed.addField(suggestion, getDescriptionFromInvocation(suggestion))
+        baseEmbed.addField(suggestion, getCommandFromInvocation(suggestion).description)
     }
 
     return baseEmbed
@@ -46,15 +43,15 @@ export function sendSuggestions(suggestions: string[]): Discord.RichEmbed {
  * available bot commands.
  */
 export function listCommands(
-    title: string, 
-    commandData: {[key: string]: DailyCommand | InfoCommand | AdminCommand}): Discord.RichEmbed {
+    title: string,
+    availableInvocations: string[]): Discord.RichEmbed {
     let baseEmbed = new Discord.RichEmbed()
         .setColor(INFO_COLOR)
         .setTitle(title)
     
-    const commands = Object.keys(commandData)
-    for (let commandName of commands) {
-        const command = commandData[commandName]
+    for (let invocation of availableInvocations) {
+        const command = getCommandFromInvocation(invocation)
+
         baseEmbed.addField(command.name, command.description)
     }
 

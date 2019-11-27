@@ -1,8 +1,13 @@
-import { DailyDisciplineHandler, SetDayHandler, ListHandler } from './classes/definitions'
+import { DailyDisciplineHandler, SetDayHandler, ListHandler, AdminViewHandler } from './classes/definitions'
 
 import { CommandHandler } from './classes/abstract'
 import { dailyCommandData } from './data/daily'
+import { infoCommandData } from './data/info'
+import { adminCommandData } from './data/admins';
 
+/**
+ * 8 Daily Disciplines
+ */
 const makeBedHandler = new DailyDisciplineHandler(
     dailyCommandData.makeBed.invocation, 
     dailyCommandData.makeBed.points, 
@@ -51,9 +56,7 @@ const setdayHandler = new SetDayHandler(
     dailyCommandData.setday.responder
 )
 
-const listHandler = new ListHandler()
-
-export const legend: {[key: string]: CommandHandler} = {
+export const dailyCommandLegend: {[key: string]: CommandHandler} = {
     [dailyCommandData.affirmation.invocation]: affirmationHandler,
     [dailyCommandData.coldShower.invocation]: coldShowerHandler,
     [dailyCommandData.gratefulness.invocation]: gratefulnessHandler,
@@ -62,5 +65,27 @@ export const legend: {[key: string]: CommandHandler} = {
     [dailyCommandData.meditation.invocation]: meditationHandler,
     [dailyCommandData.setday.invocation]: setdayHandler,
     [dailyCommandData.workout.invocation]: workoutHandler,
-    "list": listHandler
 }
+
+/**
+ * Information commands
+ */
+const listHandler = new ListHandler()
+
+export const infoCommandLegend: {[key: string]: CommandHandler} = {
+    [infoCommandData.list.invocation]: listHandler
+}
+
+/**
+ * Admin-only commands
+ */
+const adminViewScoreHandler = new AdminViewHandler("score")
+const adminViewStreakHandler = new AdminViewHandler("streak")
+
+export const adminCommandLegend: {[key: string]: CommandHandler} = {
+    [adminCommandData.viewScore.invocation]: adminViewScoreHandler,
+    [adminCommandData.viewStreak.invocation]: adminViewStreakHandler
+}
+
+export const legend: {[key: string]: CommandHandler} = 
+    {...dailyCommandLegend, ...infoCommandLegend, ...adminCommandLegend}

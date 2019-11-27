@@ -1,4 +1,5 @@
 import { CommandRequest } from './request'
+import { buildEmbed } from '../discord/embeds';
 
 /**
  * Every command for this bot has an associated handler class. Every handler
@@ -35,3 +36,34 @@ export abstract class AwardHandler extends CommandHandler {
  * InformationHandlers.)
  */
 export abstract class InformationHandler extends CommandHandler {}
+
+
+export abstract class AbstractAdminHandler extends CommandHandler {
+    abstract evaluator(req: CommandRequest): void
+
+    evaluate(req: CommandRequest) {
+        const senderID = req.msg.author.id
+        if (senderID) { // TODO: Ensure isAdmin.
+            this.evaluator(req)
+        } else {
+            const embed = buildEmbed(
+                "E", 
+                "Permission Denied", 
+                senderID, 
+                `the ${req.name} command is only available for admins.`
+            )
+
+            req.msg.channel.send(embed)
+        }
+    }
+}
+
+/**
+ * AdminViewHandler is a handler meant for admin-only commands that pertain to
+ * looking up a specific user's data in the database.
+ */
+export abstract class AbstractAdminViewHandler extends AbstractAdminHandler {
+    constructor(protected _field: string) { super() }
+
+    get field() { return this._field }
+}

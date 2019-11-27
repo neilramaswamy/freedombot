@@ -38,5 +38,10 @@ export const infoCommandData: {[key: string]: InfoCommand} = {
         name: "Retrieve The Freedom Academy's Leaderboard",
         invocation: "leaderboard",
         description: "Retrieve the score and relative rank of all of the members of The Freedom Academy."
+    },
+    list: {
+        name: "List the bot commands",
+        invocation: "list",
+        description: "List all the commands that the bot currently supports."
     }
 }
