@@ -10,6 +10,11 @@
 export default {
     auth: {
         discord: 'your-discord-bot-token-here', // REQUIRED
+        db: {
+            name: 'name-of-your-db', // REQUIRED
+            username: 'super-fancy-username', // REQUIRED
+            password: 'super-secret-not-obvious-password' // REQUIRED
+        }
     },
     channels: {
         
