@@ -3,11 +3,13 @@ import { buildEmbed, listCommands } from '../discord/embeds';
 import { getCommandFromInvocation } from '../util/commandUtil';
 import { AbstractAdminViewHandler, AwardHandler, InformationHandler } from './abstract';
 import { CommandRequest } from './request';
+import { fetchField, updateField } from '../db/utils';
+import { getHourDifference } from '../util/dates'
 
 export class DailyDisciplineHandler extends AwardHandler {
-    evaluate(req: CommandRequest): void {
+    async evaluate(req: CommandRequest): Promise<void> {
         const senderID = req.msg.author.id
-        if (this.ensureEnoughTimeElapsed(senderID, this.name)) {
+        if (await this.ensureEnoughTimeElapsed(senderID, this.name)) {
             const result = this.writeToDatabase(senderID, this.name)
             const embed = 
                 buildEmbed("S", "Daily Discipline Recorded", senderID, this.responder(result))
@@ -15,20 +17,26 @@ export class DailyDisciplineHandler extends AwardHandler {
             req.msg.channel.send(embed)
         } else {
             const embed = 
-                buildEmbed("E", "Time-Elapsed Error", senderID, "you already ran that command for today.")
+                buildEmbed("E", "Time-Elapsed Error", senderID, "you already ran that command today.")
             
             req.msg.channel.send(embed)
         }
     }
 
-    ensureEnoughTimeElapsed(id: string, field: string): boolean {
-        // do a database lookup for user `id` and field `field`
-        return true
+    async ensureEnoughTimeElapsed(id: string, field: string): Promise<boolean> {
+        const lastEvent = await fetchField(id, field)
+        // TODO: Do a smart hour difference using timezones!
+        if (!lastEvent) {
+            // the column is NULL, so they haven't used it before.
+            return true
+        } else {
+            return getHourDifference(new Date(), lastEvent || new Date()) > 24
+        }
     }
 
-    writeToDatabase(id: string, field: string): number {
-        // Write to the database, getting back the new score
-        return 5
+    async writeToDatabase(id: string, field: string): Promise<number> {
+        await updateField(id, field, this.points)
+        return await fetchField(id, "score")
     }
 }
 
@@ -109,6 +117,7 @@ export class AdminViewHandler extends AbstractAdminViewHandler {
         } else {
             console.log(`TODO: Get ${targetUser}'s ${this._field} value instead of 5!`)
             const value = 5 // getField(targetUser, field)
+            // const value = fetchField(targetUser)
             const embed = buildEmbed(
                 "S",
                 "Score Report",

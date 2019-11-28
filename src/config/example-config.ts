@@ -11,7 +11,7 @@ export default {
     auth: {
         discord: 'your-discord-bot-token-here', // REQUIRED
         db: {
-            name: 'name-of-your-db', // REQUIRED
+            name: 'name-of-your-mysql-db', // REQUIRED
             username: 'super-fancy-username', // REQUIRED
             password: 'super-secret-not-obvious-password' // REQUIRED
         }
@@ -21,8 +21,12 @@ export default {
         progress_reporting: 'channel-id-needed-here', // REQUIRED
         new_comers: 'another-channel-id-here'
     },
+    roles: {
+        // For checking whether someone can run commands.
+        admin: 'the-id-of-the-admin-role' // REQUIRED
+    },
     users: {
-        noah: 'user-id-for-tagging',
-        todd: 'another-user-id-for-testing-tagging'
+        tech_director: 'the-id-of-the-leader-of-bot-dev',
+        server_director: 'the-person-in-charge-of-server'
     }
 }

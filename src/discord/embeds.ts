@@ -27,7 +27,7 @@ export function sendSuggestions(suggestions: string[]): Discord.RichEmbed {
         : "No matching command could be found, but here are some suggestions."
     let baseEmbed = new Discord.RichEmbed()
         .setColor(INFO_COLOR)
-        .setTitle('No commands found')
+        .setTitle('No command found')
         .setDescription(description)
 
     for (let suggestion of suggestions) {
@@ -109,4 +109,11 @@ export function tagC(id: string): string {
  */
 export function tagU(id: string): string {
     return `<@${id}>`
+}
+
+/**
+ * Tags the role with the given id.
+ */
+export function tagR(id: string): string {
+    return `<@&${id}>`
 }

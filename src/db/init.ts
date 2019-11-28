@@ -14,19 +14,18 @@ sequelize.authenticate().then(() => {
 
 export const User = sequelize.define('user', {
     discord_id: {
-        type: S.BIGINT,
+        type: S.STRING,
         allowNull: false,
         unique: true
     },
     score: {
-        type: S.FLOAT,
-        defaultValue: 0
+        type: S.FLOAT
     },
     streak: {
         type: S.INTEGER,
-        defaultValue: 0
     },
     // These store the date at which the associated command was last run.
+    // They should align with the invocations of the intended command
     make_bed: { type: S.DATE},
     affirmation: { type: S.DATE },
     cold_shower: { type: S.DATE },
@@ -36,5 +35,18 @@ export const User = sequelize.define('user', {
     journal: { type: S.DATE }
 })
 
+export interface UserSchema {
+    discord_id: string
+    score?: number
+    streak?: number
+    make_bed?: Date
+    affirmation?: Date
+    cold_shower?: Date
+    meditation?: Date
+    workout?: Date
+    gratefulness?: Date
+    journal?: Date
+}
 
-// sequelize.sync({force: true})
+// const KNOW_WHAT_THE_HELL_YOURE_DOING = false
+// sequelize.sync({force: KNOW_WHAT_THE_HELL_YOURE_DOING})
